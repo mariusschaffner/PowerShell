@@ -16,9 +16,48 @@ function global:Profile-Manager {
 
     #>
     param (
+        [switch] $LoadPrompt,
+        [switch] $LoadPSReadLine,
+        [switch] $SetAliases,
+        [switch] $DisableNvimInNvim,
+
+
         $CustomFunctions,
         $GlobalPackages
     )
+
+    if ($LoadPrompt) {
+        # init custom oh-my-posh-prompt
+        oh-my-posh init pwsh --config $OhMyPoshConfig | Invoke-Expression
+    }
+
+    if ($LoadPSReadLine) {
+        # init psreadline options
+        try {
+            Set-PSReadLineOption -PredictionViewStyle ListView
+            Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+            Set-PSReadLineOption -HistorySaveStyle SaveIncrementally
+            Set-PSReadLineOption -MaximumHistoryCount 50000
+        } catch {}
+    }
+
+    if ($SetAliases) {
+        # Set alias in profile scope
+        foreach ($alias in $GlobalAliases.GetEnumerator()) {
+            Set-Alias -Name $alias.Key -Value $alias.Value -Scope Global -Force
+        }
+    }
+
+    if ($DisableNvimInNvim) {
+        # Disable nvim in within nvim
+        if ($env:NVIM) {
+            function nvim {
+                Write-Host "You are already inside Neovim. Use <A-T> to exit ToggleTerm."
+                return
+            }
+        }
+    }
+
 
     if ($CustomFunctions) {
 

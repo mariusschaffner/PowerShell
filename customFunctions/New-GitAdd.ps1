@@ -20,7 +20,7 @@ function global:New-GitAdd {
     #>
 
     param(
-        [string[]]$Args
+        [string[]]$Args = @()
     )
 
     # Check if git exists
@@ -30,7 +30,11 @@ function global:New-GitAdd {
     }
 
     # Run git add with the provided arguments
-    git add @Args
+    if ($Args.Count -eq 0) {
+        git add .
+    } else {
+        git add @Args
+    }
 
     # Show updated status
     Show-GitStatus

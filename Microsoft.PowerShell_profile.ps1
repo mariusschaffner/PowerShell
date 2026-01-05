@@ -42,48 +42,21 @@ $GlobalPackages = @(
 )
 
 #--------------------------------------------------------------------------------------#
-# PRE-SETUP MODULES & CONFIGS
+# Import Global Modules and Profile Manager
 
 # Import Modules
 Import-Module Terminal-Icons
 Import-Module CompletionPredictor
 
-# init custom oh-my-posh-prompt
-oh-my-posh init pwsh --config $OhMyPoshConfig | Invoke-Expression
-
-# init psreadline options
-try
-{
-    Set-PSReadLineOption -PredictionViewStyle ListView
-    Set-PSReadLineOption -PredictionSource HistoryAndPlugin
-    Set-PSReadLineOption -HistorySaveStyle SaveIncrementally
-    Set-PSReadLineOption -MaximumHistoryCount 50000
-} catch
-{
-}
-
-# Set alias in profile scope
-$AliasData = $GlobalAliases.Keys
-$AliasKeys = ($AliasData -split "`n")
-for ($i = 0; $i -lt $GlobalAliases.Count; $i++)
-{
-    Set-Alias -Name $AliasKeys[$i] -Value $GlobalAliases[$AliasKeys[$i]]
-}
-
-# Disable nvim in within nvim
-if ($env:NVIM)
-{
-    function nvim
-    {
-        Write-Host "You are already inside Neovim. Use <A-T> to exit ToggleTerm."
-        return
-    }
-}
+. "$($CustomFunctions)\helpers\Profile_Manager.ps1"
 
 #--------------------------------------------------------------------------------------#
-# IMPORT Profile Manager
-
-. "$($CustomFunctions)\helpers\Profile_Manager.ps1"
+# Configure Profile using the Profile Manager
+Profile-Manager `
+    -LoadPrompt `
+    -LoadPSReadLine `
+    -SetAliases `
+    -DisableNvimInNvim `
 
 # Load Functions
 $GlobalFunctions = Profile-Manager -CustomFunctions $CustomFunctions
