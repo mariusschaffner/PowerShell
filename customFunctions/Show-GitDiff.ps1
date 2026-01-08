@@ -17,5 +17,5 @@ function global:Show-GitDiff {
 
     #>
 
-    nvim -c "DiffviewOpen"
+    nvim -c "CodeDiff"
 }
