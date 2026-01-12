@@ -27,7 +27,7 @@ function global:connect {
 
     # If user passed a host → connect immediately
     if ($HostAlias) {
-        wt new-tab --tabColor $TabColor -- ssh $HostAlias
+        ssh $HostAlias
         return
     }
 
@@ -101,5 +101,5 @@ function global:connect {
     # Extract the host (left side before padding)
     $alias = $selected.Substring(0, $maxHostLength).Trim()
 
-    wt new-tab --tabColor $TabColor -- ssh $alias
+    ssh $alias
 }
