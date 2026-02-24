@@ -21,12 +21,14 @@ function global:tfrun {
     if ($env -eq "test") {
         terraform init
         Write-Host "---------------------------------"
+        Write-Host ""
         terraform validate
         Write-Host "---------------------------------"
         terraform plan -var-file="..\..\globals.tfvars" -var-file="test.tfvars" -out .\plan.tfplan
     } elseif ($env -eq "prod") {
         terraform init
         Write-Host "---------------------------------"
+        Write-Host ""
         terraform validate
         Write-Host "---------------------------------"
         terraform plan -var-file="..\..\globals.tfvars" -var-file="prod.tfvars" -out .\plan.tfplan

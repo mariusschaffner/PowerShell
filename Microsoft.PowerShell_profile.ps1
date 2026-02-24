@@ -19,7 +19,6 @@ $GlobalAliases = @{
     gs = "Show-GitStatus"       # Better git status output
     ga = "New-GitAdd"           # Better git add
     gco = "New-GitCommit"       # Better git commit
-    gg = "Show-GitGraph"        # Better git graph view
     gd = "Show-GitDiff"         # Better git diff view
     rm = "Save-Remove"          # Save delete file to trash folder
     rs = "Save-Restore"         # Save restore file from trash folder
