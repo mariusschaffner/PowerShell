@@ -15,6 +15,7 @@ $GlobalAliases = @{
     ll = "dir"                  # Print directory / files output
     n = "nvim"                  # Neovim
     b = "bat"                   # Bat
+    cat = "bat"                 # Bat as cat default
     sh = "Search-History"       # Global History searching
     gs = "Show-GitStatus"       # Better git status output
     ga = "New-GitAdd"           # Better git add
